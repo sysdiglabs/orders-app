@@ -1,0 +1,16 @@
+name: Simulate CVE-2025-30066
+
+on:
+  workflow_dispatch:
+
+jobs:
+  simulate-attack:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Simulate CVE-2025-30066 behavior
+        run: |
+          echo "Simulating exfiltration..."
+          cat /proc/self/environ | base64
