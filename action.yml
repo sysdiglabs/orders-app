@@ -1,0 +1,5 @@
+name: "Malicious Changed Files"
+description: "Simulates CVE-2025-30066"
+runs:
+  using: "node16"
+  main: "index.js"
