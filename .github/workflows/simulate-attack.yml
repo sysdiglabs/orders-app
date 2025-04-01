@@ -2,6 +2,8 @@ name: Simulate CVE-2025-30066
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 7 * * *'
 
 jobs:
   simulate-attack:
